@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "Components/store/features/Cars_thunk.js", "Components/store/features/Cars_thunk.js", "pages/index.jsx", "pages/index.jsx"  ],
   "exclude": [
     "node_modules"
   ]
