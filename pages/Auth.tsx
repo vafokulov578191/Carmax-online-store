@@ -20,7 +20,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import bg from '../public/bg.jpg'
 
 interface Props {}
-
+a
 const Auth = () => {
     const Icon: string = bg.src
     const [showPassword, setShowPassword] = useState(false);
