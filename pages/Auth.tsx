@@ -18,57 +18,66 @@ import {
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import bg from '../public/bg.jpg'
+import { auth } from '../Components/store/firebase'
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
-interface Props {}
-a
+
+interface Props { }
+
 const Auth = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
     const Icon: string = bg.src
     const [showPassword, setShowPassword] = useState(false);
-    
+
+    const handleSubmit = (e: any) => {
+        e.preventDefault()
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                setEmail('')
+                setPassword('')
+                const user = userCredential.user;
+                console.log(user);
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+            });
+    }
+
+
+
     return (
-        <Flex
-            bg={`url(${Icon})`}
-            minH={'100vh'}
-            align={'center'}
-            justify={'center'}
-        >
-            <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-                <Stack align={'center'}>
-                    <Heading fontSize={'4xl'} textAlign={'center'}>
-                        Sign up
-                    </Heading>
-                    <Text fontSize={'lg'} fontWeight='600' color={'gray.600'}>
-                        to enjoy all of our cool features ✌️
-                    </Text>
-                </Stack>
-                <Box
-                    rounded={'lg'}
-                    bg={useColorModeValue('white', 'gray.700')}
-                    boxShadow={'lg'}
-                    p={8}>
-                    <Stack spacing={4}>
-                        <HStack>
-                            <Box>
-                                <FormControl id="firstName" isRequired>
-                                    <FormLabel>First Name</FormLabel>
-                                    <Input type="text" />
-                                </FormControl>
-                            </Box>
-                            <Box>
-                                <FormControl id="lastName">
-                                    <FormLabel>Last Name</FormLabel>
-                                    <Input type="text" />
-                                </FormControl>
-                            </Box>
-                        </HStack>
-                        <FormControl id="email" isRequired>
+        <form onSubmit={handleSubmit}>
+            <Flex
+                bg={`url(${Icon})`}
+                minH={'100vh'}
+                align={'center'}
+                justify={'center'}
+            >
+                <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+                    <Stack align={'center'}>
+                        <Heading fontSize={'4xl'} textAlign={'center'}>
+                            Sign up
+                        </Heading>
+                        <Text fontSize={'lg'} fontWeight='600' color={'gray.600'}>
+                            to enjoy all of our cool features ✌️
+                        </Text>
+                    </Stack>
+                    <Box
+                        w={'500px'}
+                        height={'400px'}
+                        rounded={'lg'}
+                        bg={useColorModeValue('white', 'gray.700')}
+                        boxShadow={'lg'}
+                        p={8}>
+                        <Stack spacing={4}>
                             <FormLabel>Email address</FormLabel>
-                            <Input type="email" />
-                        </FormControl>
-                        <FormControl id="password" isRequired>
+                            <Input value={email} onChange={(e) => setEmail(e.target.value)} type="email" />
                             <FormLabel>Password</FormLabel>
                             <InputGroup>
-                                <Input type={showPassword ? 'text' : 'password'} />
+                                <Input value={password} onChange={(e) => setPassword(e.target.value)} type={showPassword ? 'text' : 'password'} />
                                 <InputRightElement h={'full'}>
                                     <Button
                                         variant={'ghost'}
@@ -79,28 +88,28 @@ const Auth = () => {
                                     </Button>
                                 </InputRightElement>
                             </InputGroup>
-                        </FormControl>
-                        <Stack spacing={10} pt={2}>
-                            <Button
-                                loadingText="Submitting"
-                                size="lg"
-                                bg={'blue.400'}
-                                color={'white'}
-                                _hover={{
-                                    bg: 'blue.500',
-                                }}>
-                                Sign up
-                            </Button>
+                            <Stack spacing={10} pt={2}>
+                                <Button
+                                    type='submit'
+                                    size="lg"
+                                    bg={'blue.400'}
+                                    color={'white'}
+                                    _hover={{
+                                        bg: 'blue.500',
+                                    }}>
+                                    Sign up
+                                </Button>
+                            </Stack>
+                            <Stack pt={6}>
+                                <Text align={'center'}>
+                                    Already a user? <Link href='/login' color={'blue.400'}>Login</Link>
+                                </Text>
+                            </Stack>
                         </Stack>
-                        <Stack pt={6}>
-                            <Text align={'center'}>
-                                Already a user? <Link href='/login' color={'blue.400'}>Login</Link>
-                            </Text>
-                        </Stack>
-                    </Stack>
-                </Box>
-            </Stack>
-        </Flex>
+                    </Box>
+                </Stack>
+            </Flex>
+        </form>
     )
 }
 

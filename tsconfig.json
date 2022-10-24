@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "Components/store/features/Cars_thunk.js", "Components/store/features/Cars_thunk.js", "pages/index.jsx", "pages/index.jsx"  ],
+, "Components/store/features/Cars_thunk.js", "Components/store/features/Cars_thunk.js", "pages/index.jsx", "pages/index.jsx", "Components/SVGIcons.tsx", "Components/Layout/Layout.tsx"  ],
   "exclude": [
     "node_modules"
   ]
